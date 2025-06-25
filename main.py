@@ -56,7 +56,6 @@ def health_check():
         logger.error(f"Health check failed: {e}")
         return {"status": "unhealthy", "database": "disconnected", "error": str(e)}
 
-# Run app programmatically using port from .env
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)

@@ -1,7 +1,6 @@
 from fastapi import HTTPException, UploadFile
 import shutil
 import os
-import cloudinary.uploader
 from roboflow import Roboflow
 import requests
 import cv2
@@ -9,6 +8,9 @@ from PIL import Image
 from cloudinary_config import cloudinary
 from utils.text_extractor import TextExtractor
 from utils.document_formatter import DocumentFormatter
+import easyocr
+
+reader = easyocr.Reader(['en'])
 
 def convert_to_jpg(temp_file):
     """Convert PNG to JPG if necessary."""
