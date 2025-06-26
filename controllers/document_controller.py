@@ -1,16 +1,14 @@
 from fastapi import HTTPException, UploadFile
 import shutil
 import os
-from roboflow import Roboflow
 import requests
 import cv2
 from PIL import Image
-from cloudinary_config import cloudinary
-from utils.text_extractor import TextExtractor
-from utils.document_formatter import DocumentFormatter
-import easyocr
+from roboflow import Roboflow
 
-reader = easyocr.Reader(['en'])
+from cloudinary_config import cloudinary
+from utils.core import text_extractor  
+from utils.document_formatter import DocumentFormatter
 
 def convert_to_jpg(temp_file):
     """Convert PNG to JPG if necessary."""
@@ -61,8 +59,7 @@ def detect_objects(image_url: str, card_type: str):
 
         image = cv2.imread(image_path)
 
-        text_extractor = TextExtractor(reader)
-
+        # ✅ Use shared EasyOCR reader via text_extractor
         extracted_text = text_extractor.extract_document_text(image, predictions["predictions"])
 
         formatted_data = DocumentFormatter.format_document_data(card_type, extracted_text)
